@@ -5,6 +5,16 @@
 # Usage: sudo ./setup.sh [hostname]
 #==============================================================================
 
+# Fix apt_pkg issue nếu python3 system bị ghi đè
+if ! python3 -c "import apt_pkg" >/dev/null 2>&1; then
+    log_warning "apt_pkg lỗi — khôi phục Python system cho apt..."
+    if [[ -x /usr/bin/python3.12 ]]; then
+        ln -sf /usr/bin/python3.12 /usr/bin/python3
+        log_success "Đã khôi phục /usr/bin/python3 → Python 3.12"
+    fi
+fi
+
+
 set -euo pipefail
 IFS=$'\n\t'
 
